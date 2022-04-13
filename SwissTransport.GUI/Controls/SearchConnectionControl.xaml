@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="SwissTransport.GUI.Controls.SearchConnectionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SwissTransport.GUI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <Grid Background="White" x:Name="grdSearchConnectionControl">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox x:Name="grpSearchConnection" Header="Verbindung Suchen" Margin="5" Grid.ColumnSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="lblFrom" Content="Von"/>
+                <Label x:Name="lblTo" Grid.Row="1" Content="Bis"/>
+                <Label x:Name="lblDate" Grid.Row="2" Content="Datum"/>
+                <Label x:Name="lblTime" Content="Uhrzeit" Grid.Row="3" Grid.Column="2"/>
+
+                <TextBox x:Name="txtFrom" Grid.Column="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding FromStation, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="txtTo" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding ToStation, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="txtDate" Grid.Column="1" Grid.Row="3" Margin="2.5" Text="{Binding Date, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, StringFormat=dd.MM.YY}"/>
+                <TextBox x:Name="txtTime" Grid.Column="3" Grid.Row="3" Margin="2.5" Text="{Binding Time, StringFormat=HH:mm, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button x:Name="BtnClearSearch" Content="Suchen zurücksetzen" Grid.Column="5" Height="20" Width="150" Command="{Binding ClearButtonCommand}"/>
+            </Grid>
+        </GroupBox>
+
+        <Label x:Name="lblConnections" Content="Verbindungen" Grid.Column="0" Grid.Row="1"/>
+        <Button x:Name="BtnSearchConnections" Content="Verbindungen Anzeigen" Width="150" Height="20" Grid.Column="2" Grid.Row="1" Margin="0,0,10,0" Command="{Binding SearchConnectionsButtonCommand}"/>
+
+        <DataGrid x:Name="DtgConnections" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" ItemsSource="{Binding Path=ConnectionViews, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Abfahrt" Binding="{Binding Departure, StringFormat=dd.MM.yyyy hh:mm}" Width="30*"/>
+                <DataGridTextColumn Header="Ankunft" Binding="{Binding Arrival, StringFormat=dd.MM.yyyy hh:mm}" Width="30*"/>
+                <DataGridTextColumn Header="Kante" Binding="{Binding Platform}" Width="20*"/>
+                <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, StringFormat=dd:hh:mm}" Width="20*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

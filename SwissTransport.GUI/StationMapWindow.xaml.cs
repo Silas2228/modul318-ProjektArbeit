@@ -1,4 +1,5 @@
 ﻿using SwissTransport.GUI.ViewModels;
+using SwissTransport.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SwissTransport.GUI
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for StationMapWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class StationMapWindow : Window
 	{
-		private readonly MainWindowViewModel mainWindowViewModel;
-		public MainWindow()
+		private readonly StationMapWindowViewModel _stationMapWindowViewModel;
+		public StationMapWindow(Coordinate coordinate)
 		{
 			InitializeComponent();
-			mainWindowViewModel = new MainWindowViewModel();
-			this.DataContext = mainWindowViewModel;
+			_stationMapWindowViewModel = new StationMapWindowViewModel(coordinate);
+			this.WebBrowser.Source = _stationMapWindowViewModel.UrlSource;
 		}
 	}
 }

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="SwissTransport.GUI.Controls.DepartureBoardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SwissTransport.GUI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <Grid Background="White" x:Name="grdDepartureBoardControl">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox x:Name="grpSearchStation" Header="Abfahrtstafel" Grid.ColumnSpan="4" Grid.Row="0" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="75*"/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblStation" Content="Station"/>
+                <ComboBox x:Name="cmbautocomplete" IsEditable="True" Text="{Binding Station, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" TextBoxBase.TextChanged="CmbautocompleteTextChanged" Grid.Column="1" GotFocus="cmbautocomplete_GotFocus"/>
+                <Button x:Name="BtnClearSearch" Content="Suchen zurücksetzen" Grid.Column="3" Width="150" Height="20" Command="{Binding ClearButtonComand}"/>
+            </Grid>
+        </GroupBox>
+        <Label x:Name="lblDepartureBoard" Content="Abfahrtstafel" Grid.Row="1"/>
+        <Button x:Name="BtnSearchStations" Content="Abfahrtstafel Anzeigen" Grid.Column="3" Grid.Row="1" Height="20" Width="150" Margin="0,0,10,0" Command="{Binding SearchStationsButtonComand}"/>
+        <Button x:Name="BtnMap" Content="Karte" Grid.Column="2" Grid.Row="1" Height="20" Width="50" Margin="0,0,2.5,0" Command="{Binding MapButtonComand}"/>
+
+        <DataGrid x:Name="dtgDepartureBoard" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding DepartureBoardViews, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nach" Binding="{Binding To}" Width="50*"/>
+                <DataGridTextColumn Header="Kategorie" Binding="{Binding CategoryAndNumber}" Width="40*"/>
+                <DataGridTextColumn Header="Abfahrt" Binding="{Binding Departure}" Width="10*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

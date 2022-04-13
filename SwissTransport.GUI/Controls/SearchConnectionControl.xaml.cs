@@ -14,19 +14,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SwissTransport.GUI
+namespace SwissTransport.GUI.Controls
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for SearchConnectionControl.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class SearchConnectionControl : UserControl
 	{
-		private readonly MainWindowViewModel mainWindowViewModel;
-		public MainWindow()
+		private readonly SearchConnectionControlViewModel searchConnectionControlViewModel;
+		public SearchConnectionControl()
 		{
 			InitializeComponent();
-			mainWindowViewModel = new MainWindowViewModel();
-			this.DataContext = mainWindowViewModel;
+			searchConnectionControlViewModel = new SearchConnectionControlViewModel();
+			this.grdSearchConnectionControl.DataContext = searchConnectionControlViewModel;
+			this.txtFrom.Focus();
 		}
 	}
 }

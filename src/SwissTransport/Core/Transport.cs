@@ -16,7 +16,7 @@
         {
             if (string.IsNullOrEmpty(query))
             {
-                throw new ArgumentNullException(nameof(query));
+             throw new ArgumentNullException(nameof(query));
             }
 
             var uri = new Uri($"{WebApiHost}locations?query={query}");
@@ -52,6 +52,22 @@
             }
 
             var uri = new Uri($"{WebApiHost}connections?from={fromStation}&to={toStation}");
+            return this.GetObject<Connections>(uri);
+        }
+
+        public Connections GetConnections(string fromStation, string toStation, DateTime time)
+        {
+            if (string.IsNullOrEmpty(fromStation))
+            {
+                throw new ArgumentNullException(nameof(fromStation));
+            }
+
+            if (string.IsNullOrEmpty(toStation))
+            {
+                throw new ArgumentNullException(nameof(toStation));
+            }
+
+            var uri = new Uri($"{WebApiHost}connections?from={fromStation}&to={toStation}&date={time.ToString("dd.MM.yyyy")}&time={time.ToString("HH:mm")}");
             return this.GetObject<Connections>(uri);
         }
 
