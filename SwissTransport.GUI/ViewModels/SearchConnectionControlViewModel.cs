@@ -60,6 +60,7 @@ namespace SwissTransport.GUI.ViewModels
 					{
 						ClearButtonCommand.RaiseCanExecuteChanged();
 						SearchConnectionsButtonCommand.RaiseCanExecuteChanged();
+						_date = value; OnPropertyChanged();
 						throw new ArgumentException("Bitte ein Datum nach diesem Format eingeben: dd.MM.yyyy");
 					}
 				}
@@ -153,14 +154,13 @@ namespace SwissTransport.GUI.ViewModels
 
 		private bool SearchButtonCommandCanExecute()
 		{
-			if (!string.IsNullOrEmpty(Date) || !string.IsNullOrEmpty(Time))
+			if (!string.IsNullOrEmpty(Date) && !string.IsNullOrEmpty(Time))
 			{
 				if (!DateTime.TryParseExact(Date, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) || !DateTime.TryParseExact(Time, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
 				{
 					return false;
 				}
 			}
-
 
 			if (!string.IsNullOrEmpty(FromStation) && !string.IsNullOrEmpty(ToStation))
 			{
