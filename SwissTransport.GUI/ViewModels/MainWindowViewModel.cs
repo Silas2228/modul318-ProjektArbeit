@@ -18,17 +18,14 @@ namespace SwissTransport.GUI.ViewModels
 		#endregion
 
 		#region Constructors
-
 		public MainWindowViewModel()
 		{
 			_searchConnectionButtonCommand = new RelayCommand(SearchConnectionButtonClick);
 			_departureBoardButtonCommand = new RelayCommand(DepartureBoardButtonClick);
 		}
-
 		#endregion
 
 		#region Properties
-
 		public Visibility SearchConnectionControlVisibility
 		{
 			get { return _searchConnectionControlVisibility; }
@@ -50,11 +47,9 @@ namespace SwissTransport.GUI.ViewModels
 		{
 			get { return _departureBoardButtonCommand; }
 		}
-
 		#endregion
 
 		#region Public Methods
-
 		public void SearchConnectionButtonClick(object parameter)
 		{
 			SearchConnectionControlVisibility = Visibility.Visible;
@@ -66,7 +61,6 @@ namespace SwissTransport.GUI.ViewModels
 			DepartureBoardControlVisibility = Visibility.Visible;
 			SearchConnectionControlVisibility = Visibility.Collapsed;
 		}
-
 		#endregion
 	}
 }

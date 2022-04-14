@@ -26,9 +26,19 @@
                     <ColumnDefinition Width="25*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Label x:Name="lblStation" Content="Station"/>
-                <ComboBox x:Name="cmbautocomplete" IsEditable="True" Text="{Binding Station, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" TextBoxBase.TextChanged="CmbautocompleteTextChanged" Grid.Column="1" GotFocus="cmbautocomplete_GotFocus"/>
-                <Button x:Name="BtnClearSearch" Content="Suchen zurücksetzen" Grid.Column="3" Width="150" Height="20" Command="{Binding ClearButtonComand}"/>
+                <ComboBox x:Name="cmbautocomplete" IsEditable="True" Text="{Binding Station, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" TextBoxBase.TextChanged="CmbautocompleteTextChanged" Grid.Column="1" Margin="2.5" IsTextSearchEnabled="False" PreviewKeyDown="CmbautocompletePreviewKeyDown" DropDownOpened="CmbautocompleteDropDownOpened">
+                    <ComboBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchStationsButtonComand, Mode=OneWay}" Key="Return"/>
+                    </ComboBox.InputBindings>
+                </ComboBox>
+                <Label Content="Transportmittel" Grid.Row="1"/>
+                <ComboBox x:Name="cmbtransportation" Grid.Row="1" Grid.Column="1" Margin="2.5" ItemsSource="{Binding Transportations}" DisplayMemberPath="Key" SelectedValue="{Binding Transportation}" SelectedValuePath="Key"/>
+                <Button x:Name="BtnClearSearch" Content="Suchen zurücksetzen" Grid.Column="3" Width="150" Height="20" Command="{Binding ClearButtonComand}" />
             </Grid>
         </GroupBox>
         <Label x:Name="lblDepartureBoard" Content="Abfahrtstafel" Grid.Row="1"/>
@@ -36,10 +46,10 @@
         <Button x:Name="BtnMap" Content="Karte" Grid.Column="2" Grid.Row="1" Height="20" Width="50" Margin="0,0,2.5,0" Command="{Binding MapButtonComand}"/>
 
         <DataGrid x:Name="dtgDepartureBoard" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5" ItemsSource="{Binding DepartureBoardViews, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nach" Binding="{Binding To}" Width="50*"/>
-                <DataGridTextColumn Header="Kategorie" Binding="{Binding CategoryAndNumber}" Width="40*"/>
-                <DataGridTextColumn Header="Abfahrt" Binding="{Binding Departure}" Width="10*"/>
+            <DataGrid.Columns >
+                <DataGridTextColumn Header=" Nach" Binding="{Binding To}" Width="35*"/>
+                <DataGridTextColumn Header=" Linie" Binding="{Binding Railway}" Width="40*"/>
+                <DataGridTextColumn Header=" Abfahrt" Binding="{Binding Departure}" Width="15*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

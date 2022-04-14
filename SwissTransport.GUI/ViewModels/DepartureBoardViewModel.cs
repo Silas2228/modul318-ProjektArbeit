@@ -16,7 +16,9 @@ namespace SwissTransport.GUI.ViewModels
 	{
 		#region Private Members
 		private string _station = string.Empty;
+		private const string id = "id";
 		private Station _stationBoard;
+		private string _transportation = string.Empty;
 		private ObservableCollection<StationBoard> _stationBoards;
 		private ObservableCollection<DepartureBoardView> _departureBoardViews;
 		private readonly ITransport _transport;
@@ -26,7 +28,6 @@ namespace SwissTransport.GUI.ViewModels
 		#endregion
 
 		#region Constructors
-
 		public DepartureBoardViewModel()
 		{
 			_stationBoard = new Station();
@@ -36,16 +37,27 @@ namespace SwissTransport.GUI.ViewModels
 			_clearButtonCommand = new RelayCommand(ClearButtonClick, o => ClearButtonCommandCanExecute());
 			_searchStationsButtonCommand = new RelayCommand(SearchStationsButtonClick, o => SearchStationsCommandCanExecute());
 			_mapButtonCommand = new RelayCommand(MapButtonClick, o => MapCommandCanExecute());
+			Transportations = new Dictionary<string,string>();
+			Transportations.Add(string.Empty, string.Empty);
+			Transportations.Add("Zug","train");
+			Transportations.Add("tram","tram");
+			Transportations.Add("Schiff","ship");
+			Transportations.Add("Bus","bus");
+			Transportations.Add("Seilbahn", "cableway");
 		}
-
 		#endregion
 
 		#region Properties
-
 		public string Station
 		{
 			get { return _station; }
 			set { _station = value; OnPropertyChanged(); }
+		}
+
+		public string Transportation
+		{
+			get { return _transportation; }
+			set { _transportation = value; OnPropertyChanged(); }
 		}
 
 		public Station StationBoard
@@ -71,6 +83,8 @@ namespace SwissTransport.GUI.ViewModels
 			set { _departureBoardViews = value; OnPropertyChanged(); }
 		}
 
+		public IDictionary<string, string> Transportations { get; set; }
+
 		public RelayCommand ClearButtonComand
 		{
 			get { return _clearButtonCommand; }
@@ -85,17 +99,25 @@ namespace SwissTransport.GUI.ViewModels
 		{
 			get { return _mapButtonCommand; }
 		}
-
 		#endregion
 
 		#region Public Methods
-
 		public void GetConnections()
 		{
 			try
 			{
 				DepartureBoardViews.Clear();
-				StationBoardRoot stationBoardRoot = _transport.GetStationBoard(this.Station, "id");
+				StationBoardRoot stationBoardRoot = new StationBoardRoot();
+
+				if (string.IsNullOrEmpty(Transportation))
+				{
+					stationBoardRoot = _transport.GetStationBoard(this.Station, id);
+				}
+				else
+				{
+					string transportation = Transportations.Where(x => x.Key.Equals(Transportation)).FirstOrDefault().Value;
+					stationBoardRoot = _transport.GetStationBoard(this.Station, id, transportation);
+				}
 
 				foreach (StationBoard station in stationBoardRoot.Entries)
 				{
@@ -116,6 +138,7 @@ namespace SwissTransport.GUI.ViewModels
 		public void ClearButtonClick(object parameter)
 		{
 			this.Station = string.Empty;
+			this.Transportation = string.Empty;
 		}
 
 		public void SearchStationsButtonClick(object parameter)
@@ -139,13 +162,10 @@ namespace SwissTransport.GUI.ViewModels
 			{
 
 			}
-
 		}
-
 		#endregion
 
 		#region Private Methods
-
 		private bool ClearButtonCommandCanExecute()
 		{
 			return !string.IsNullOrEmpty(this.Station);
@@ -165,7 +185,6 @@ namespace SwissTransport.GUI.ViewModels
 
 			return false;
 		}
-
 		#endregion
 	}
 }

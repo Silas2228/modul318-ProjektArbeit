@@ -10,6 +10,8 @@
 
         StationBoardRoot GetStationBoard(string station, string id);
 
+        StationBoardRoot GetStationBoard(string station, string id, string transportation);
+
         Connections GetConnections(string fromStation, string toStation);
 
         Connections GetConnections(string fromStation, string toStation, DateTime time);

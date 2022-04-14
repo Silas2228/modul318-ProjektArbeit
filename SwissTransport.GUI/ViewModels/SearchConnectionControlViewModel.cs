@@ -26,6 +26,7 @@ namespace SwissTransport.GUI.ViewModels
 		private readonly RelayCommand _clearButtonCommand;
 		#endregion
 
+		#region Constructors
 		public SearchConnectionControlViewModel()
 		{
 			_connectionViews = new ObservableCollection<ConnectionView>();
@@ -33,6 +34,7 @@ namespace SwissTransport.GUI.ViewModels
 			_searchConnectionsButtonCommand = new RelayCommand(SearchConnectionButtonClick, o => SearchButtonCommandCanExecute());
 			_clearButtonCommand = new RelayCommand(ClearButtonClick, o => ClearButtonCommandCanExecute());
 		}
+		#endregion
 
 		#region Properties
 		public string FromStation
@@ -57,7 +59,7 @@ namespace SwissTransport.GUI.ViewModels
 					if (!DateTime.TryParseExact(value, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
 					{
 						ClearButtonCommand.RaiseCanExecuteChanged();
-						throw new ArgumentException("Bitte geben Sie ein Datum nach diesem Format ein: dd.MM.yyyy");
+						SearchConnectionsButtonCommand.RaiseCanExecuteChanged();
 					}
 				}
 
@@ -75,7 +77,7 @@ namespace SwissTransport.GUI.ViewModels
 					if (!DateTime.TryParseExact(value, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
 					{
 						ClearButtonCommand.RaiseCanExecuteChanged();
-						throw new ArgumentException("Bitte geben Sie ein Datum nach diesem Format ein: HH:mm");
+						SearchConnectionsButtonCommand.RaiseCanExecuteChanged();
 					}
 				}
 
@@ -115,11 +117,9 @@ namespace SwissTransport.GUI.ViewModels
 			this.Date = string.Empty;
 			this.Time = string.Empty;
 		}
-
 		#endregion
 
 		#region Private Methods
-
 		private void GetConnections()
 		{
 			try
@@ -140,7 +140,7 @@ namespace SwissTransport.GUI.ViewModels
 
 					foreach (Connection connection in connections)
 					{
-						ConnectionViews.Add(new ConnectionView(Convert.ToDateTime(connection.From.Departure), Convert.ToDateTime(connection.To.Arrival), connection.From.Platform, connection.Duration));
+						ConnectionViews.Add(new ConnectionView(Convert.ToDateTime(connection.From.Departure), Convert.ToDateTime(connection.To.Arrival), connection.From.Platform, connection.Duration, connection.From.Station.Name, connection.To.Station.Name));
 					}
 				}
 			}
@@ -151,6 +151,15 @@ namespace SwissTransport.GUI.ViewModels
 
 		private bool SearchButtonCommandCanExecute()
 		{
+			if (!string.IsNullOrEmpty(Date) || !string.IsNullOrEmpty(Time))
+			{
+				if (!DateTime.TryParseExact(Date, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) || !DateTime.TryParseExact(Time, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+				{
+					return false;
+				}
+			}
+
+
 			if (!string.IsNullOrEmpty(FromStation) && !string.IsNullOrEmpty(ToStation))
 			{
 				return true;
@@ -168,7 +177,6 @@ namespace SwissTransport.GUI.ViewModels
 
 			return false;
 		}
-
 		#endregion
 	}
 }

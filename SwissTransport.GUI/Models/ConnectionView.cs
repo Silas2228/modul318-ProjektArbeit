@@ -8,19 +8,25 @@ namespace SwissTransport.GUI.Models
 {
 	public class ConnectionView
 	{
-		public ConnectionView(DateTime departure, DateTime arrival, string platform, string duration)
+		#region Constructors
+		public ConnectionView(DateTime departure, DateTime arrival, string platform, string duration, string from, string to)
 		{
 			this.Departure = departure.ToString("dd.MM.yyyy HH:mm");
 			this.Arrival = arrival.ToString("dd.MM.yyyy HH:mm");
 			this.Platform = platform;
 			this.Duration = duration;
+			this.From = from;
+			this.To = to;
 		}
+		#endregion
 
 		#region Properties
-		public string Departure { get; set; }
-		public string Arrival { get; set; }
-		public string Platform { get; set; }
-		public string Duration { get; set; }
+		public string From { get; set; } = string.Empty;
+		public string To { get; set; } = string.Empty;
+		public string Departure { get; set; } = string.Empty;
+		public string Arrival { get; set; } = string.Empty;
+		public string Platform { get; set; } = string.Empty;
+		public string Duration { get; set; } = string.Empty;
 		#endregion
 	}
-}
+}	

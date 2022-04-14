@@ -23,25 +23,31 @@ namespace SwissTransport.GUI.Controls
 	public partial class DepartureBoardControl : UserControl
 	{
 		private readonly DepartureBoardViewModel departureBoardViewModel;
+		private Key _cmbkey;
 		public DepartureBoardControl()
 		{
 			InitializeComponent();
 			departureBoardViewModel = new DepartureBoardViewModel();
 			this.grdDepartureBoardControl.DataContext = departureBoardViewModel;
+			this.cmbautocomplete.Focus();
 		}
 
 		public void CmbautocompleteTextChanged(object sender, TextChangedEventArgs e)
 		{
 			try
 			{
-				List<string> stationnames = new List<string>();
-				List<Station> stations = departureBoardViewModel.GetStations();
-				foreach (Station s in stations)
+				if (_cmbkey != Key.Back || _cmbkey != Key.Delete)
 				{
-					stationnames.Add(s.Name);
+					List<string> stationnames = new List<string>();
+					List<Station> stations = departureBoardViewModel.GetStations();
+					foreach (Station s in stations)
+					{
+						stationnames.Add(s.Name);
+					}
+					cmbautocomplete.ItemsSource = stationnames;
+
+					cmbautocomplete.IsDropDownOpen = true;
 				}
-				cmbautocomplete.ItemsSource = stationnames;
-				cmbautocomplete.IsDropDownOpen = true;
 			}
 			catch
 			{
@@ -49,9 +55,21 @@ namespace SwissTransport.GUI.Controls
 			}
 		}
 
-		private void cmbautocomplete_GotFocus(object sender, RoutedEventArgs e)
+		private void CmbautocompletePreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			BtnSearchStations.TabIndex = 0;
+			_cmbkey = e.Key;
+		}
+
+		private void CmbautocompleteDropDownOpened(object sender, EventArgs e)
+		{
+			if (_cmbkey == Key.Back || _cmbkey == Key.Delete)
+			{
+				cmbautocomplete.IsDropDownOpen = false;
+			}
+			else
+			{
+				cmbautocomplete.IsDropDownOpen = true;
+			}
 		}
 	}
 }

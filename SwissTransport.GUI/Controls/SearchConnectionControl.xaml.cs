@@ -29,5 +29,13 @@ namespace SwissTransport.GUI.Controls
 			this.grdSearchConnectionControl.DataContext = searchConnectionControlViewModel;
 			this.txtFrom.Focus();
 		}
+
+		private void TxtFromPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				txtTo.Focus();
+			}
+		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿namespace SwissTransport
 {
+    using System;
+    using System.Linq;
     using FluentAssertions;
     using SwissTransport.Core;
     using SwissTransport.Models;
@@ -36,6 +38,22 @@
             Connections connections = this.testee.GetConnections("Sursee", "Luzern");
 
             connections.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ConnectionsWithDateTime()
+        {
+            // Arrange
+            DateTime dateTime = DateTime.Now.AddDays(1);
+
+            // Act
+            Connections connections = this.testee.GetConnections("Sursee", "Luzern", dateTime);
+            DateTime connectionDateTime = Convert.ToDateTime(connections.ConnectionList.FirstOrDefault().From.Departure);
+
+            // Assert
+            Assert.NotNull(connections);
+            Assert.Equal(connectionDateTime.Date, dateTime.Date);
+            Assert.True(connectionDateTime.TimeOfDay >= dateTime.TimeOfDay);
         }
     }
 }

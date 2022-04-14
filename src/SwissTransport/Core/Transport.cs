@@ -39,6 +39,22 @@
             return this.GetObject<StationBoardRoot>(uri);
         }
 
+        public StationBoardRoot GetStationBoard(string station, string id, string transportation)
+        {
+            if (string.IsNullOrEmpty(station))
+            {
+                throw new ArgumentNullException(nameof(station));
+            }
+
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var uri = new Uri($"{WebApiHost}stationboard?station={station}&id={id}&transportations[]={transportation}");
+            return this.GetObject<StationBoardRoot>(uri);
+        }
+
         public Connections GetConnections(string fromStation, string toStation)
         {
             if (string.IsNullOrEmpty(fromStation))

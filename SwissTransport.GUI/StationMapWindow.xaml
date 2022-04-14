@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SwissTransport.GUI"
         mc:Ignorable="d"
-        Title="StationMapWindow" Height="650" Width="1000" WindowStartupLocation="CenterOwner">
+        Title="Karte" Height="650" Width="1000" WindowStartupLocation="CenterOwner" Icon="/Assets/map.png">
     <Grid>
         <WebBrowser x:Name="WebBrowser">
 

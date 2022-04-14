@@ -8,7 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\board.png" />
+    <None Remove="Assets\map.png" />
+    <None Remove="Assets\search.png" />
+    <None Remove="Assets\train.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\board.png" />
+    <Resource Include="Assets\map.png" />
+    <Resource Include="Assets\train.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\src\SwissTransport\SwissTransport.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\search.png" />
   </ItemGroup>
 
 </Project>

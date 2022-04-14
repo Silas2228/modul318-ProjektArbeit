@@ -4,12 +4,6 @@
              xmlns:local="clr-namespace:SwissTransport.GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ControlTemplate  x:Key="ErrorTemplate">
-            <Border BorderBrush="Red" BorderThickness="2">
-                <Grid>
-                    <TextBlock Text="{Binding ErrorMessae}"/>
-                </Grid>
-            </Border>
-        </ControlTemplate>
+        <ResourceDictionary Source="Styles\StyleDictionary.xaml"/>
     </Application.Resources>
 </Application>

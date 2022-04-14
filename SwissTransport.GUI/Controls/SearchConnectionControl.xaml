@@ -38,11 +38,18 @@
                 <Label x:Name="lblTo" Grid.Row="1" Content="Bis"/>
                 <Label x:Name="lblDate" Grid.Row="2" Content="Datum"/>
                 <Label x:Name="lblTime" Content="Uhrzeit" Grid.Row="3" Grid.Column="2"/>
-
-                <TextBox x:Name="txtFrom" Grid.Column="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding FromStation, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox x:Name="txtTo" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding ToStation, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="txtFrom" Grid.Column="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding FromStation, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="TxtFromPreviewKeyDown"/>
+                <TextBox x:Name="txtTo" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Margin="2.5" Text="{Binding ToStation, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchConnectionsButtonCommand, Mode=OneWay}" Key="Return" />
+                    </TextBox.InputBindings>
+                </TextBox>
                 <TextBox x:Name="txtDate" Grid.Column="1" Grid.Row="3" Margin="2.5" Text="{Binding Date, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, StringFormat=dd.MM.YY}"/>
-                <TextBox x:Name="txtTime" Grid.Column="3" Grid.Row="3" Margin="2.5" Text="{Binding Time, StringFormat=HH:mm, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="txtTime" Grid.Column="3" Grid.Row="3" Margin="2.5" Text="{Binding Time, StringFormat=HH:mm, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchConnectionsButtonCommand, Mode=OneWay}" Key="Return" />
+                    </TextBox.InputBindings>
+                </TextBox>
                 <Button x:Name="BtnClearSearch" Content="Suchen zurücksetzen" Grid.Column="5" Height="20" Width="150" Command="{Binding ClearButtonCommand}"/>
             </Grid>
         </GroupBox>
@@ -52,10 +59,12 @@
 
         <DataGrid x:Name="DtgConnections" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" ItemsSource="{Binding Path=ConnectionViews, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Abfahrt" Binding="{Binding Departure, StringFormat=dd.MM.yyyy hh:mm}" Width="30*"/>
-                <DataGridTextColumn Header="Ankunft" Binding="{Binding Arrival, StringFormat=dd.MM.yyyy hh:mm}" Width="30*"/>
-                <DataGridTextColumn Header="Kante" Binding="{Binding Platform}" Width="20*"/>
-                <DataGridTextColumn Header="Dauer" Binding="{Binding Duration, StringFormat=dd:hh:mm}" Width="20*"/>
+                <DataGridTextColumn Header=" Von" Binding="{Binding From}" Width="20*"/>
+                <DataGridTextColumn Header=" Abfahrt" Binding="{Binding Departure, StringFormat=dd.MM.yyyy hh:mm}" Width="20*"/>
+                <DataGridTextColumn Header=" Nach" Binding="{Binding To}" Width="20*"/>
+                <DataGridTextColumn Header=" Ankunft" Binding="{Binding Arrival, StringFormat=dd.MM.yyyy hh:mm}" Width="20*"/>
+                <DataGridTextColumn Header=" Kante" Binding="{Binding Platform}" Width="10*"/>
+                <DataGridTextColumn Header=" Dauer" Binding="{Binding Duration, StringFormat=hh:mm}" Width="10*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
