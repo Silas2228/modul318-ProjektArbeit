@@ -60,6 +60,7 @@ namespace SwissTransport.GUI.ViewModels
 					{
 						ClearButtonCommand.RaiseCanExecuteChanged();
 						SearchConnectionsButtonCommand.RaiseCanExecuteChanged();
+						throw new ArgumentException("Bitte ein Datum nach diesem Format eingeben: dd.MM.yyyy");
 					}
 				}
 
@@ -78,6 +79,7 @@ namespace SwissTransport.GUI.ViewModels
 					{
 						ClearButtonCommand.RaiseCanExecuteChanged();
 						SearchConnectionsButtonCommand.RaiseCanExecuteChanged();
+						throw new ArgumentException("Bitte eine Uhrzeit nach diesem Format eingeben: HH:mm");
 					}
 				}
 
